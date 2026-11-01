@@ -38,6 +38,10 @@ RetroUX_Wiz は、原作の絵・音・文章、モンスターやアイテム�
 
 モンスターの絵の色は、利用者の FCEUX の `palettes\FCEUX.pal` から実行時に読みます。ZIP に色の表は入っていません。
 
+## Lua スクリプト
+
+`src\retroux_wiz\lua` の Lua スクリプトは FCEUX の中で動くので、MIT License で提供します（`licenses\MIT-Lua.txt`）。
+
 ## RetroUX から移したソース
 
 `src/retroux_wiz` の一部（ジョイパッド・画面の部品・保存の仕組みなど）は、同じ作者の [RetroUX](https://github.com/akizuna515-bit/RetroUX) のソースを元にしています。RetroUX は MIT ライセンスです。元のライセンスの表示を次に写します。
