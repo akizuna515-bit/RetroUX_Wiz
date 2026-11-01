@@ -1,18 +1,32 @@
 # 第三者のソフトウェア
 
-## この ZIP に含まれないもの
+## この ZIP に含むもの
 
-次のものは ZIP に入っていません。利用者が自分で用意するか、`uv sync` が公式の配布元から入れます。それぞれのライセンスに従ってください。
+`runtime\python\` には、RetroUX_Wiz を動かすための第三者のソフトウェアを同梱しています。**これらは RetroUX_Wiz の一部ではなく、`LICENSE` の利用許諾は及びません。** それぞれのライセンスに従います。本文は `licenses\` にあります。
 
-| もの | ライセンス | 入手 |
-| --- | --- | --- |
-| ファミコン版 Wizardry の ROM | 原作の権利者の著作物 | 自分が正当に持っているもの |
-| FCEUX 2.6.6 | GPL-2.0-or-later | 利用者が入手 |
-| uv | uv の配布物の表示に従ってください | 利用者が入手 |
-| Python 3.12 | PSF License | uv が入手 |
-| hatchling とその依存 | それぞれの配布物の表示に従ってください | `uv sync` がビルドの道具として PyPI から入手。実行には使わない |
-| PySide6・PySide6_Essentials・PySide6_Addons・shiboken6 6.11.2 | LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only | `uv sync` が PyPI から入手 |
-| PyYAML 6.0.3 | MIT | `uv sync` が PyPI から入手 |
+| もの | ライセンス | 本文 | 入手元 |
+| --- | --- | --- | --- |
+| Python 3.12.10（埋め込み版） | PSF License | `licenses\Python-LICENSE.txt` | https://www.python.org/ |
+| PySide6_Essentials・shiboken6 6.11.2（Qt を含む） | LGPL-3.0-only で再配布（配布元の表示は LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only） | `licenses\LGPL-3.0.txt`・`licenses\GPL-3.0.txt` | https://pypi.org/project/PySide6-Essentials/6.11.2/ |
+| PyYAML 6.0.3（libyaml を含む） | MIT | `licenses\PyYAML-LICENSE.txt`・`licenses\libyaml-License.txt` | https://pypi.org/project/PyYAML/6.0.3/ |
+| Qt に含まれる第三者の部品（PCRE2・zlib・FreeType・libpng・HarfBuzz など） | 部品ごとのライセンス | `licenses\Qt-third-party.txt` | Qt のソースに含まれる |
+| Python に含まれる第三者の部品（OpenSSL・SQLite・zlib・bzip2・xz・libffi・expat・mpdecimal など） | 部品ごとのライセンス | `licenses\Python-LICENSE.txt`・Python のソース | https://www.python.org/ |
+| Microsoft Visual C++ ランタイム（`msvcp140*.dll`・`vcruntime140*.dll`） | Microsoft の再配布の条件。これらのファイルに含まれる Microsoft の表示を変えず、利用者がこれらを単体で再配布しないこと | — | Python・PySide6 の配布物に含まれる |
+
+**PySide6・Qt について**
+
+- ソースコード: PySide6 と shiboken6 は https://code.qt.io/cgit/pyside/pyside-setup.git/ のタグ v6.11.2、Qt は https://code.qt.io/cgit/qt/qtbase.git/ のタグ v6.11.2 から入手できます。
+- 改変: ソースもバイナリも改変していません。配布物を小さくするため、使わないファイル（QML・開発用ツール・翻訳・一部のプラグインなど）を外しています。
+- 置き換え: `runtime\python\Lib\site-packages\` の `PySide6` と `shiboken6` は、互換のある別の版に置き換えられます。`LICENSE` はこの権利を制限しません。
+
+## この ZIP に含まないもの
+
+利用者が自分で用意します。
+
+| もの | ライセンス |
+| --- | --- |
+| ファミコン版 Wizardry の ROM | 原作の権利者の著作物 |
+| FCEUX 2.6.6 | GPL-2.0-or-later |
 
 ## 原作の内容
 

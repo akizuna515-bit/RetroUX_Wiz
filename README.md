@@ -25,7 +25,7 @@ RetroUX は RAM と ROM を書き換えません。ゲームへ送るのは、�
 - バックアップの復元は、利用者が選んだときだけセーブのファイルを書き戻します。
 - どこでもセーブのロードは、利用者が選んだときだけ、FCEUX 標準の仕組みでゲームの状態を入れ替えます。管理画面からは確認の後に行います。**パッドの LB（読む）と RB（保存）は確認なしで動きます。**
 
-実行中に外部のサーバーへ通信するコードはありません。通信するのは導入のときの `uv sync` だけです（PyPI からライブラリとビルドの道具を取得します）。
+実行中も導入のときも、外部のサーバーへ通信しません。
 
 使い方は `MANUAL.md`、分かっている制限は `KNOWN-ISSUES.md`、変更の履歴は `CHANGELOG.md` にあります。
 
@@ -33,23 +33,18 @@ RetroUX は RAM と ROM を書き換えません。ゲームへ送るのは、�
 
 **用意するもの**（同梱しません）
 
-- Windows
-- [uv](https://docs.astral.sh/uv/)（Python 3.12 は uv が入れます）
-- FCEUX 2.6.6（64 ビット版。FCEUX の公式の配布元から入手してください）
+- Windows（64 ビット）
+- FCEUX 2.6.6（64 ビット版。入手先は `data\FCEUX\PLACE-FCEUX-HERE.txt`）
 - ファミコン版 Wizardry（日本版）の ROM（自分で用意したもの）
+
+Python と画面のライブラリは ZIP に入っています。uv や Python を入れる必要はありません。
 
 **新しく入れる**
 
 1. ZIP を空のフォルダに展開します（例 `RetroUX_Wiz`）。
-2. そのフォルダの中に `data\FCEUX\` を作り、FCEUX を置きます（`data\FCEUX\fceux64.exe` になるように）。
-3. `data\ROM\` を作り、ROM を置きます。既定で探すファイル名は `Wizardry - Proving Grounds of the Mad Overlord (Japan).nes` です。別の名前や場所でも使えます。そのときは `config\user.example.toml` を参考に、`data\Wizardry\config\user.local.toml` の `[paths]` に書きます。
-4. そのフォルダでターミナルを開き、1 回だけ次を実行します（PySide6 などを `.venv` に入れます）。
-
-```bash
-uv sync --frozen --no-dev
-```
-
-5. `run_retroux_wiz.cmd` をダブルクリックして起動します。
+2. `data\FCEUX\` に FCEUX の zip の中身を展開します（`data\FCEUX\fceux64.exe` になるように）。
+3. `data\ROM\` に ROM を置きます。既定で探すファイル名は `Wizardry - Proving Grounds of the Mad Overlord (Japan).nes` です。別の名前や場所でも使えます。そのときは `config\user.example.toml` を参考に、`data\Wizardry\config\user.local.toml` の `[paths]` に書きます。
+4. `run_retroux_wiz.cmd` をダブルクリックして起動します。
 
 **利用者のデータはすべて `data\` の下**にあります。
 
@@ -62,11 +57,20 @@ uv sync --frozen --no-dev
 | 設定 | `data\Wizardry\config\user.local.toml` |
 | FCEUX のゲームのセーブ | `data\FCEUX\sav`・`fcs` |
 
-ZIP に `data\` は入っていません。
+`data\` の中で ZIP に入っているのは、置き場所を案内する txt 2 個だけです。セーブや記録は入っていません。
 
-**同じフォルダで更新する**: RetroUX と FCEUX を閉じ、新しい ZIP を同じフォルダに上書きで展開してから、`uv sync --frozen --no-dev` をもう一度実行します。`data\` と `.venv\` は残ります。念のため、先に `data\` を別の場所へ写しておいてください。
+**同じフォルダで更新する**: RetroUX_Wiz と FCEUX を閉じ、新しい ZIP を同じフォルダに上書きで展開します。`data\` のセーブや記録は残ります。念のため、先に `data\` を別の場所へ写しておいてください。
 
-**別のフォルダへ更新する**: 新しいフォルダに展開し、前のフォルダの `data\` をフォルダごと写して、新しいフォルダで `uv sync --frozen --no-dev` を実行します。前のフォルダは、新しい版で動くのを確かめるまで消さないでください。
+**別のフォルダへ更新する**: 新しいフォルダに展開し、前のフォルダの `data\` をフォルダごと写します。前のフォルダは、新しい版で動くのを確かめるまで消さないでください。
+
+**前のセーブや記録を取り込む（任意）**: 別のフォルダの RetroUX や FCEUX から写すときは、`migrate_save_data.cmd` を使います。**項目はどれも既定でオフ**で、起動しただけでは何も写しません。**記録も写すときは、新しいフォルダで最初に起動する前に行ってください。** 起動した後は写し先に同じ名前の違うファイルができるので、止まります。
+
+1. RetroUX_Wiz と FCEUX を閉じ、`migrate_save_data.cmd` をダブルクリックします。
+2. 元のフォルダを入力します（前の RetroUX のフォルダか、FCEUX のフォルダ）。
+3. 写す項目だけ `y` と答えます（ゲームのセーブ／記録・図鑑・地図・バックアップ・設定／ROM）。何も選ばなければ終わります。
+4. 確認に `yes` と入力すると写します。
+
+元のフォルダは読むだけで変えません。写し先に違う中身があれば、1 つも書かずに止まります。「照合が合いません」と止まったときは、写し先に残ったファイルを消してからやり直してください。設定を写すと `[paths]` もそのまま写るので、前の場所が書いてあれば空にしてください。ゲームのセーブは ROM のファイル名と同じ名前なので、ROM の名前を変えるとセーブとして読まれません。
 
 **消す**: フォルダごと削除します。`data\` の中のセーブ・バックアップ・記録も一緒に消えるので、残すものは先に写してください。
 
@@ -78,7 +82,8 @@ Get-FileHash .\RetroUX_Wiz-0.1.0.zip -Algorithm SHA256
 
 ## 困ったとき
 
-- `.venv` が無いと言われる: 手順 4 のコマンドを実行してください。
+- Python が見つからないと言われる: ZIP を展開し直してください。`runtime` フォルダを消さないでください。
+- Windows の警告が出る: `.cmd` などに署名がないためです。ブラウザで落とした ZIP では出ることがあります。配布ページの SHA-256 と比べて確かめ、問題がなければ「詳細情報」から実行してください。
 - ROM が見つからない: `data\ROM\` の場所とファイル名を確かめてください。
 - 音が消えたまま: Windows の音量ミキサーで FCEUX の消音を外してください。
 - 動作の記録は `data\Wizardry\runtime\logs` にあります。
